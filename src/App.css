@@ -14,12 +14,16 @@
   width: 100%;
   height: 100%;
   z-index: 1;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 #subway-canvas, .canvas-wrapper canvas {
   display: block;
   width: 100% !important;
   height: 100% !important;
+  touch-action: none;
 }
 
 /* --- 3D & Pleasant Daylight HUD --- */
@@ -1425,33 +1429,326 @@
   margin-top: 4px;
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 600px) {
+/* --- COMPREHENSIVE MOBILE RESPONSIVENESS & TOUCH CONTROLS --- */
+@media (max-width: 680px) {
+  /* Overlay & Modal Cards: Full Mobile Scrollability & Ergonomics */
+  .daylight-overlay {
+    padding: 12px 10px;
+    align-items: flex-start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .three-d-card {
+    max-height: 94vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 24px 16px;
+    border-radius: 22px;
+    margin: auto;
+  }
+
+  .three-d-title-top {
+    font-size: 40px;
+  }
+
+  .three-d-title-bottom {
+    font-size: 34px;
+    transform: rotate(2deg) translateY(-4px);
+  }
+
+  .logo-subline {
+    font-size: 9px;
+    padding: 3px 8px;
+  }
+
+  .mission-briefing-card {
+    padding: 12px 10px;
+    margin-bottom: 12px;
+  }
+
+  .mission-headline {
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  .mission-details-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+  }
+
+  .ms-label {
+    font-size: 8px;
+  }
+
+  .ms-val {
+    font-size: 11px;
+  }
+
+  .start-stats-row {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .stat-pill {
+    padding: 6px 10px;
+  }
+
+  .pill-val {
+    font-size: 14px;
+  }
+
+  .character-preview-box {
+    margin-bottom: 14px;
+    padding: 10px;
+  }
+
+  .commuter-avatar-icon {
+    font-size: 30px;
+  }
+
+  .commuter-title {
+    font-size: 11px;
+  }
+
+  .commuter-specs {
+    font-size: 9px;
+  }
+
+  .character-tag {
+    font-size: 8px;
+  }
+
+  .btn-primary-run {
+    width: 100%;
+    padding: 14px 18px;
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  .start-menu-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .menu-secondary-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  .shop-boards-grid,
+  .shop-upgrades-grid,
+  .game-over-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .run-stat-card.primary-score {
+    grid-column: span 1;
+  }
+
+  /* HUD Mobile Layout: Non-overlapping, clean viewports */
+  .game-hud {
+    padding: 8px 12px;
+  }
+
   .hud-office-tracker {
-    min-width: 90%;
-    top: 10px;
+    width: calc(100% - 24px);
+    max-width: 400px;
+    min-width: unset;
+    top: 8px;
     padding: 6px 12px;
+    border-radius: 14px;
   }
+
+  .office-tracker-header {
+    font-size: 9px;
+  }
+
+  .tracker-clock {
+    font-size: 9px;
+    padding: 1px 6px;
+  }
+
+  .tracker-target {
+    font-size: 9px;
+  }
+
+  .tracker-speed {
+    font-size: 9px;
+    padding: 1px 6px;
+  }
+
+  .office-tracker-footer {
+    font-size: 9px;
+  }
+
+  .dist-remaining {
+    font-size: 10px;
+  }
+
+  .punch-in-target {
+    font-size: 8px;
+  }
+
   .hud-top-left {
-    top: 72px;
+    position: absolute;
+    top: 76px;
+    left: 12px;
+    gap: 2px;
   }
+
+  .hud-city-badge {
+    font-size: 9px;
+    padding: 1px 6px;
+  }
+
+  .hud-label {
+    font-size: 8px;
+  }
+
+  .hud-score-value {
+    font-size: 24px;
+  }
+
+  .hud-highscore-badge {
+    padding: 2px 8px;
+  }
+
+  .highscore-text {
+    font-size: 10px;
+  }
+
   .hud-top-right {
-    top: 72px;
+    position: absolute;
+    top: 76px;
+    right: 12px;
+    gap: 6px;
   }
-  .hud-score-value { font-size: 24px; }
-  .three-d-title-top { font-size: 42px; }
-  .three-d-title-bottom { font-size: 38px; }
-  .three-d-stamp { font-size: 34px; }
-  .shop-boards-grid { grid-template-columns: 1fr; }
-  .game-over-stats-grid { grid-template-columns: 1fr; }
-  .run-stat-card.primary-score { grid-column: span 1; }
+
+  .hud-coin-badge {
+    padding: 4px 10px;
+  }
+
+  .coin-count {
+    font-size: 14px;
+  }
+
+  .hud-multiplier-badge {
+    padding: 4px 10px;
+    font-size: 13px;
+  }
+
+  .three-d-circle {
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+  }
+
+  .hud-active-powerups {
+    position: absolute;
+    top: 156px;
+    left: 12px;
+    max-width: 130px;
+    gap: 6px;
+    margin-top: 0;
+  }
+
+  .three-d-meter {
+    padding: 4px 8px;
+    border-radius: 12px;
+  }
+
+  .meter-label {
+    font-size: 8px;
+  }
+
+  .hud-hoverboard-quick {
+    position: absolute;
+    bottom: 84px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 0;
+  }
+
+  .three-d-board-btn {
+    padding: 9px 18px;
+    font-size: 13px;
+    border-radius: 24px;
+  }
+
+  /* Ergonomic On-Screen Touch Buttons for Thumbs */
   .mobile-touch-controls {
-    bottom: 16px;
+    display: flex !important;
+    position: absolute;
+    bottom: 14px;
+    left: 0;
+    right: 0;
     padding: 0 16px;
+    justify-content: space-between;
+    pointer-events: none;
+    z-index: 30;
   }
+
+  .touch-group {
+    display: flex;
+    gap: 10px;
+    pointer-events: auto;
+  }
+
   .touch-btn {
-    width: 50px;
-    height: 50px;
-    font-size: 18px;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid #ffffff;
+    color: #0f172a;
+    font-size: 20px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2), 0 3px 0 #cbd5e1;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .touch-btn:active {
+    transform: translateY(2px) scale(0.94);
+    box-shadow: 0 1px 0 #cbd5e1;
+    background: #e2e8f0;
+  }
+
+  .touch-jump-btn {
+    background: rgba(2, 132, 199, 0.92);
+    color: #ffffff;
+    border-color: #38bdf8;
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35), 0 3px 0 #0369a1;
+  }
+
+  .touch-slide-btn {
+    background: rgba(217, 119, 6, 0.92);
+    color: #ffffff;
+    border-color: #fbbf24;
+    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.35), 0 3px 0 #b45309;
   }
 }
+
+@media (max-width: 380px) {
+  .three-d-title-top { font-size: 34px; }
+  .three-d-title-bottom { font-size: 28px; }
+  .touch-btn {
+    width: 46px;
+    height: 46px;
+    font-size: 17px;
+  }
+  .hud-office-tracker {
+    padding: 4px 8px;
+  }
+}
+

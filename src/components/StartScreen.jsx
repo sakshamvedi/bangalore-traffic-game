@@ -124,7 +124,7 @@ export function StartScreen({
 
         {/* Footer */}
         <div className="start-footer-hint daylight-hint">
-          <span>⚠️ Dodge red BMTC buses, yellow-green autos, potholes & low-hanging cables!</span>
+          <span>⚠️ Dodge blue-and-white BMTC electric buses, oncoming scooters, autos & potholes!</span>
         </div>
       </div>
     </div>
