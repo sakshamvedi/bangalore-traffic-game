@@ -34,10 +34,11 @@ html, body, #root {
   background-color: var(--color-day-sky);
   font-family: var(--font-main);
   color: #1e293b;
-  touch-action: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 body {
   position: fixed;
   inset: 0;
+  overscroll-behavior: none;
 }

@@ -2206,6 +2206,26 @@ export class ThreeEngine {
     soundManager.playSlide();
   }
 
+  // --- Bangalore Horn Sound (Scooty Horn & Traffic Honk-back) ---
+  honkHorn() {
+    if (this.gameState !== 'playing') return;
+    soundManager.playScooterHorn();
+    this.cameraShake = 0.25;
+
+    // Reacting traffic: vehicle ahead honks back!
+    for (const obs of this.obstacles) {
+      if (obs.z > 5 && obs.z < 42 && !obs.hasHonkedBack) {
+        obs.hasHonkedBack = true;
+        setTimeout(() => {
+          if (obs.type === 'bmtc_bus') soundManager.playBusHorn();
+          else if (obs.type === 'auto') soundManager.playAutoHorn();
+          else soundManager.playScooterHorn();
+        }, 220 + Math.random() * 160);
+        break;
+      }
+    }
+  }
+
   activateHoverboard() {
     if (this.gameState !== 'playing') return;
     if (this.player.hasHoverboard) return;

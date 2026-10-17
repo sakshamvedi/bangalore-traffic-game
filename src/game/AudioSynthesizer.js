@@ -220,8 +220,8 @@ class AudioSynthesizer {
     osc2.type = 'sawtooth';
     osc2.frequency.setValueAtTime(425, t); // Major third chord
 
-    gain.gain.setValueAtTime(0.2, t);
-    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.45);
+    gain.gain.setValueAtTime(0.25, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.48);
 
     osc1.connect(gain);
     osc2.connect(gain);
@@ -229,8 +229,52 @@ class AudioSynthesizer {
 
     osc1.start(t);
     osc2.start(t);
-    osc1.stop(t + 0.45);
-    osc2.stop(t + 0.45);
+    osc1.stop(t + 0.48);
+    osc2.stop(t + 0.48);
+  }
+
+  // Scooty Horn: sharp authentic Indian commuter dual-tone electric horn "PEEEP-PEEEEP!"
+  playScooterHorn() {
+    if (this.isMuted) return;
+    this.ensureContext();
+    if (!this.ctx) return;
+
+    const t = this.ctx.currentTime;
+    [0, 0.11].forEach((offset) => {
+      const osc1 = this.ctx.createOscillator();
+      const osc2 = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc1.type = 'sawtooth';
+      osc1.frequency.setValueAtTime(520, t + offset);
+      osc2.type = 'sawtooth';
+      osc2.frequency.setValueAtTime(587, t + offset);
+
+      gain.gain.setValueAtTime(0.28, t + offset);
+      gain.gain.exponentialRampToValueAtTime(0.01, t + offset + 0.09);
+
+      osc1.connect(gain);
+      osc2.connect(gain);
+      gain.connect(this.sfxGain);
+
+      osc1.start(t + offset);
+      osc2.start(t + offset);
+      osc1.stop(t + offset + 0.09);
+      osc2.stop(t + offset + 0.09);
+    });
+  }
+
+  // Random Ambient Bangalore Traffic Horn
+  playTrafficHorn() {
+    if (this.isMuted) return;
+    const roll = Math.random();
+    if (roll < 0.45) {
+      this.playAutoHorn();
+    } else if (roll < 0.8) {
+      this.playBusHorn();
+    } else {
+      this.playScooterHorn();
+    }
   }
 
   // Auto Shield / Scooter deploy sound
