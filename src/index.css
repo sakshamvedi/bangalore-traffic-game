@@ -1,0 +1,43 @@
+/* Reset & Daylight Modern Setup */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --font-main: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-arcade: 'Fredoka', cursive, sans-serif;
+
+  /* Modern Minimalist India Daylight Palette */
+  --color-day-sky: #78b5e8;
+  --color-day-bg: #f8fafc;
+  --color-tech-blue: #0077b6;
+  --color-saffron: #ff7700;
+  --color-bmtc-green: #00a86b;
+  --color-auto-yellow: #ffbb00;
+  --color-metro-purple: #8e24aa;
+
+  /* Clean daylight glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.88);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --card-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(15, 23, 42, 0.06);
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--color-day-sky);
+  font-family: var(--font-main);
+  color: #1e293b;
+  touch-action: none;
+}
+
+body {
+  position: fixed;
+  inset: 0;
+}
