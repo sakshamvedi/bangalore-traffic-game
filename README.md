@@ -1,16 +1,8 @@
-# React + Vite
+Bangalore Traffic game Reverse Engineer of subway Surfer 
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+React.js / Three.js 
 
-Currently, two official plugins are available:
+<img width="558" height="882" alt="image" src="https://github.com/user-attachments/assets/90f73cff-f23a-4d93-b9ae-b8c7f8887854" />
+<img width="630" height="981" alt="Screenshot 2026-10-18 at 6 40 05 PM" src="https://github.com/user-attachments/assets/669f5fa6-11f8-4c9c-9204-e8c3699554e2" />
+<img width="645" height="880" alt="image" src="https://github.com/user-attachments/assets/070b154d-55ae-411c-a8de-ff551975d6e7" />
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
