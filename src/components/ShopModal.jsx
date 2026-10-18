@@ -1,4 +1,13 @@
 import React, { useState } from 'react';
+import {
+  IoCafe,
+  IoMagnet,
+  IoFlash,
+  IoRocket,
+  IoShieldCheckmark,
+  IoClose
+} from 'react-icons/io5';
+import { FaIndianRupeeSign, FaMotorcycle } from 'react-icons/fa6';
 
 export function ShopModal({
   totalCoins,
@@ -18,28 +27,28 @@ export function ShopModal({
     {
       id: 'multiplier',
       name: 'Filter Kaapi Boost (2x)',
-      icon: '☕',
+      icon: <IoCafe size={24} color="#d97706" />,
       desc: 'Authentic South Indian chicory blend doubles valuation growth.',
       costMultiplier: 500
     },
     {
       id: 'magnet',
       name: 'VC Funding Magnet',
-      icon: '🧲',
-      desc: 'Draws all ₹ Rupee coins directly to your startup bank account.',
+      icon: <IoMagnet size={24} color="#ef4444" />,
+      desc: 'Draws all Rupee coins directly to your startup bank account.',
       costMultiplier: 500
     },
     {
       id: 'sneakers',
       name: 'Ather Warp Leap',
-      icon: '⚡',
+      icon: <IoFlash size={24} color="#eab308" />,
       desc: 'Instant torque bounce allowing you to jump onto BMTC bus roofs.',
       costMultiplier: 500
     },
     {
       id: 'jetpack',
       name: 'Namma Metro Sky Flight',
-      icon: '🚀',
+      icon: <IoRocket size={24} color="#3b82f6" />,
       desc: 'Fly above the Silk Board gridlock on the elevated purple line.',
       costMultiplier: 600
     }
@@ -47,17 +56,17 @@ export function ShopModal({
 
   const boardSkins = [
     {
-      id: 'ather',
-      name: 'Ather 450X Scooter',
-      icon: '⚡',
+      id: 'ola_black',
+      name: 'Ola S1 Pro (Midnight Black)',
+      icon: <FaMotorcycle size={26} color="#38bdf8" />,
       price: 0,
-      gradient: 'linear-gradient(90deg, #00d46a, #0077b6)',
-      desc: 'Warp mode electric scooter with aerodynamic cyber chassis.'
+      gradient: 'linear-gradient(90deg, #0f172a, #334155)',
+      desc: 'Official 3D Ola Electric Scooter in Midnight Black with digital cockpit & alloy wheels.'
     },
     {
       id: 'auto',
       name: 'Namma Yatri Auto',
-      icon: '🛺',
+      icon: <IoShieldCheckmark size={26} color="#ffcc00" />,
       price: 1200,
       gradient: 'linear-gradient(90deg, #ffcc00, #138808)',
       desc: 'Iconic yellow-green 3-wheeler with meter on demand.'
@@ -65,7 +74,7 @@ export function ShopModal({
     {
       id: 'bullet',
       name: 'Royal Enfield Cruiser',
-      icon: '🏍️',
+      icon: <FaMotorcycle size={26} color="#94a3b8" />,
       price: 2500,
       gradient: 'linear-gradient(90deg, #334155, #64748b)',
       desc: 'Heavy thump exhaust note turning heads on 100ft road.'
@@ -73,7 +82,7 @@ export function ShopModal({
     {
       id: 'ola',
       name: 'Ola S1 Pro Coral',
-      icon: '🛵',
+      icon: <FaMotorcycle size={26} color="#f97316" />,
       price: 4000,
       gradient: 'linear-gradient(90deg, #ef4444, #f97316)',
       desc: 'Hyper-mode sports scooter with built-in speakers.'
@@ -88,11 +97,11 @@ export function ShopModal({
           <div className="shop-title-area">
             <span className="modal-title">BENGALURU TECH STORE</span>
             <span className="shop-balance daylight-balance">
-              <span className="coin-icon">₹</span>
+              <span className="coin-icon"><FaIndianRupeeSign size={14} /></span>
               <span>{totalCoins.toLocaleString()}</span>
             </span>
           </div>
-          <button className="modal-close-btn" onClick={onClose}>✕</button>
+          <button className="modal-close-btn" onClick={onClose}><IoClose size={22} /></button>
         </div>
 
         {/* Tab Switcher */}
@@ -101,13 +110,15 @@ export function ShopModal({
             className={`shop-tab-btn daylight-tab-btn ${activeTab === 'upgrades' ? 'active' : ''}`}
             onClick={() => setActiveTab('upgrades')}
           >
-            ☕ HUSTLE UPGRADES
+            <IoCafe size={16} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 6 }} />
+            HUSTLE UPGRADES
           </button>
           <button
             className={`shop-tab-btn daylight-tab-btn ${activeTab === 'boards' ? 'active' : ''}`}
             onClick={() => setActiveTab('boards')}
           >
-            🛵 SCOOTERS & AUTOS
+            <FaMotorcycle size={16} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 6 }} />
+            SCOOTERS & AUTOS
           </button>
         </div>
 
@@ -117,7 +128,9 @@ export function ShopModal({
             {/* Quick Buy Auto Shield */}
             <div className="shop-item-card featured daylight-item-card">
               <div className="item-icon-col">
-                <div className="item-icon-box daylight-icon-box">🛺</div>
+                <div className="item-icon-box daylight-icon-box">
+                  <IoShieldCheckmark size={24} color="#10b981" />
+                </div>
               </div>
               <div className="item-info-col">
                 <div className="item-name">Namma Yatri Auto Shield (+1)</div>
@@ -131,7 +144,9 @@ export function ShopModal({
                   onClick={onBuyHoverboard}
                   disabled={totalCoins < 300}
                 >
-                  <span>₹ 300</span>
+                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2 }}>
+                    <FaIndianRupeeSign size={11} /> 300
+                  </span>
                   <span>BUY</span>
                 </button>
               </div>
@@ -172,7 +187,9 @@ export function ShopModal({
                         onClick={() => onUpgradePowerup(p.id, upgradeCost)}
                         disabled={totalCoins < upgradeCost}
                       >
-                        <span>₹ {upgradeCost}</span>
+                        <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2 }}>
+                          <FaIndianRupeeSign size={11} /> {upgradeCost}
+                        </span>
                         <span>UPGRADE</span>
                       </button>
                     )}
@@ -212,7 +229,9 @@ export function ShopModal({
                         onClick={() => onBuyBoard(b.id, b.price)}
                         disabled={totalCoins < b.price}
                       >
-                        ₹ {b.price}
+                        <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2 }}>
+                          <FaIndianRupeeSign size={11} /> {b.price}
+                        </span>
                       </button>
                     )}
                   </div>

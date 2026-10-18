@@ -1,0 +1,11 @@
+Model Information:
+* title:	Boy Idle Mixamo animation free
+* source:	https://sketchfab.com/3d-models/boy-idle-mixamo-animation-free-10bb5911f36f41ae872fb567d34d269c
+* author:	unbeatable (https://sketchfab.com/NobleMinded)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Boy Idle Mixamo animation free" (https://sketchfab.com/3d-models/boy-idle-mixamo-animation-free-10bb5911f36f41ae872fb567d34d269c) by unbeatable (https://sketchfab.com/NobleMinded) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

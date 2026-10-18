@@ -1,4 +1,11 @@
 import React from 'react';
+import {
+  IoTrophy,
+  IoRefresh,
+  IoStorefront,
+  IoHome
+} from 'react-icons/io5';
+import { FaIndianRupeeSign } from 'react-icons/fa6';
 
 export function GameOverModal({
   stats,
@@ -13,10 +20,14 @@ export function GameOverModal({
       <div className="game-over-card daylight-card three-d-card">
         {/* Busted Header */}
         <div className="busted-stamp-container">
-          <div className="kannada-stamp-tag">ನಮ್ಮ BENGALURU TRAFFIC POLICE</div>
-          <div className="busted-stamp bangalore-stamp three-d-stamp">CHALLAN ISSUED!</div>
+          <div className="kannada-stamp-tag">BENGALURU TRAFFIC POLICE • ORR SURVEILLANCE</div>
+          <div className={`busted-stamp bangalore-stamp three-d-stamp ${stats?.reason === 'red_light_challan' ? 'challan-red-stamp' : ''}`}>
+            {stats?.reason === 'red_light_challan' ? 'RED LIGHT JUMPED! BTP CHALLAN' : 'CHALLAN ISSUED!'}
+          </div>
           <div className="busted-subtext daylight-subtext">
-            Stuck at Silk Board! Traffic Mama caught you without a helmet.
+            {stats?.reason === 'red_light_challan'
+              ? '🚨 Section 119/177 M.V. Act: Signal jumping caught on Outer Ring Road AI camera! Fine: ₹1,000'
+              : 'Stuck at Silk Board! Traffic Mama caught you without a helmet.'}
           </div>
         </div>
 
@@ -32,7 +43,7 @@ export function GameOverModal({
         {/* New Record Banner */}
         {isNewRecord && (
           <div className="new-record-banner bangalore-record three-d-record">
-            <span className="trophy-bounce">🦄</span>
+            <span className="trophy-bounce"><IoTrophy /></span>
             <span>NEW UNICORN VALUATION!</span>
           </div>
         )}
@@ -51,7 +62,7 @@ export function GameOverModal({
 
           <div className="run-stat-card daylight-stat-card three-d-stat">
             <span className="stat-label">RUPEES SAVED</span>
-            <span className="stat-value coin-val">₹ +{stats.coins.toLocaleString()}</span>
+            <span className="stat-value coin-val"><FaIndianRupeeSign /> +{stats.coins.toLocaleString()}</span>
           </div>
 
           <div className="run-stat-card daylight-stat-card three-d-stat">
@@ -67,18 +78,18 @@ export function GameOverModal({
             onClick={onRestart}
             id="btn-restart-run"
           >
-            <span className="play-triangle">🔄</span>
+            <span className="play-triangle"><IoRefresh /></span>
             <span className="play-text">RIDE AGAIN</span>
-            <span className="key-hint">SPACEBAR</span>
+
           </button>
 
           <div className="secondary-actions-row">
             <button className="menu-secondary-btn daylight-sec-btn three-d-sub-btn" onClick={onOpenShop}>
-              <span className="btn-icon">🛒</span>
+              <span className="btn-icon"><IoStorefront /></span>
               <span>SHOP</span>
             </button>
             <button className="menu-secondary-btn daylight-sec-btn three-d-sub-btn" onClick={onHome}>
-              <span className="btn-icon">🏠</span>
+              <span className="btn-icon"><IoHome /></span>
               <span>MENU</span>
             </button>
           </div>

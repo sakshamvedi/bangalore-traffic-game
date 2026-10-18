@@ -1,0 +1,11 @@
+Model Information:
+* title:	Auto Rickshaw
+* source:	https://sketchfab.com/3d-models/auto-rickshaw-44776bcb34e04c1a8b9c18a70376304e
+* author:	rSquare (https://sketchfab.com/rSquare)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Auto Rickshaw" (https://sketchfab.com/3d-models/auto-rickshaw-44776bcb34e04c1a8b9c18a70376304e) by rSquare (https://sketchfab.com/rSquare) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

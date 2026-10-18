@@ -1,0 +1,8 @@
+Model Information:
+* title:	Plusar
+* source:	https://sketchfab.com/3d-models/plusar-8a76e4c77c46435ca5371ee10ed2956e
+* author:	raobott (https://sketchfab.com/raobott)
+
+Model License:
+* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
+* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works

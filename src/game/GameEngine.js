@@ -763,10 +763,10 @@ export class GameEngine {
         targetAuto.x = newLane * this.laneSpacing;
 
         soundManager.playAutoHorn();
-        this.addHonkBubble(targetAuto.x, targetAuto.z, '⚠️ SUDDEN CUT!');
+        this.addHonkBubble(targetAuto.x, targetAuto.z, 'SUDDEN CUT!');
 
         this.suddenWarning = {
-          text: '⚠️ SUDDEN AUTO CUT!',
+          text: 'SUDDEN AUTO CUT!',
           time: 1.5
         };
       }
@@ -1688,15 +1688,15 @@ export class GameEngine {
       ctx.translate(p.x, p.y);
 
       const icons = {
-        kaapi: '☕',
-        multiplier: '☕',
-        magnet: '🧲',
-        warp: '⚡',
-        sneakers: '⚡',
-        metro_jetpack: '🚀',
-        jetpack: '🚀',
-        auto_shield: '🛺',
-        hoverboard: '🛺'
+        kaapi: '2X',
+        multiplier: '2X',
+        magnet: 'MAG',
+        warp: 'FAST',
+        sneakers: 'JUMP',
+        metro_jetpack: 'FLY',
+        jetpack: 'FLY',
+        auto_shield: 'SHLD',
+        hoverboard: 'SHLD'
       };
 
       ctx.fillStyle = '#ffffff';
@@ -1711,10 +1711,11 @@ export class GameEngine {
       ctx.lineWidth = Math.max(2, 3.5 * p.scale);
       ctx.stroke();
 
-      ctx.font = `${Math.max(11, Math.floor(radius * 1.3))}px sans-serif`;
+      ctx.font = `bold ${Math.max(9, Math.floor(radius * 0.9))}px sans-serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText(icons[item.powerupType] || '☕', 0, 0);
+      ctx.fillStyle = '#0077b6';
+      ctx.fillText(icons[item.powerupType] || '2X', 0, 0);
 
       ctx.restore();
     }

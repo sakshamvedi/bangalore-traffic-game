@@ -12,6 +12,9 @@ export function GameCanvas({
   onDistanceUpdate,
   onVictory,
   onTogglePause,
+  onStartGame,
+  onAssetsProgress,
+  onPowerupCollected,
   engineRef
 }) {
   const containerRef = useRef(null);
@@ -30,7 +33,9 @@ export function GameCanvas({
       onGameOver,
       onHoverboardCountChange,
       onDistanceUpdate,
-      onVictory
+      onVictory,
+      onAssetsProgress,
+      onPowerupCollected
     });
 
     if (engineRef) {
@@ -51,7 +56,15 @@ export function GameCanvas({
       if (engine.gameState !== 'playing') {
         if (e.code === 'Space' && (engine.gameState === 'ready' || engine.gameState === 'gameover' || engine.gameState === 'victory')) {
           e.preventDefault();
-          engine.start();
+          if (engine.gameState === 'ready' && !engine.isAssetsReady) {
+            console.log('3D Fleet assets are preloading...');
+            return;
+          }
+          if (onStartGame) {
+            onStartGame();
+          } else {
+            engine.start();
+          }
         }
         return;
       }
@@ -70,12 +83,24 @@ export function GameCanvas({
         case 'ArrowUp':
         case 'KeyW':
           e.preventDefault();
-          engine.jump();
+          engine.setThrottle(true);
           break;
         case 'ArrowDown':
         case 'KeyS':
           e.preventDefault();
-          engine.slide();
+          engine.setBrake(true);
+          break;
+        case 'KeyH':
+        case 'KeyF':
+          e.preventDefault();
+          engine.honkHorn();
+          break;
+        case 'KeyC':
+        case 'KeyV':
+          e.preventDefault();
+          if (engine.toggleCameraView) {
+            engine.toggleCameraView();
+          }
           break;
         case 'Space':
           e.preventDefault();
@@ -90,7 +115,21 @@ export function GameCanvas({
       }
     };
 
+    const handleKeyUp = (e) => {
+      switch (e.code) {
+        case 'ArrowUp':
+        case 'KeyW':
+          engine.setThrottle(false);
+          break;
+        case 'ArrowDown':
+        case 'KeyS':
+          engine.setBrake(false);
+          break;
+      }
+    };
+
     window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
 
     // Touch Swipe & Double Tap Gestures
     const handleTouchStart = (e) => {
@@ -128,8 +167,13 @@ export function GameCanvas({
           if (dx > 0) engine.moveRight();
           else engine.moveLeft();
         } else {
-          if (dy > 0) engine.slide();
-          else engine.jump();
+          if (dy > 0) {
+            engine.setBrake(true);
+            setTimeout(() => engine.setBrake(false), 900);
+            engine.slide();
+          } else {
+            engine.jump();
+          }
         }
       }
     };
@@ -139,6 +183,7 @@ export function GameCanvas({
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
       container.removeEventListener('touchstart', handleTouchStart);
       container.removeEventListener('touchend', handleTouchEnd);
       engine.destroy();

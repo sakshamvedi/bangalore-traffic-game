@@ -50,7 +50,37 @@ class AudioSynthesizer {
     if (this.masterGain && this.ctx) {
       this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : 0.85, this.ctx.currentTime);
     }
+    if (this.isMuted && this.teamsAudio) {
+      this.teamsAudio.pause();
+    }
     return this.isMuted;
+  }
+
+  // Microsoft Teams Ringtone when scooty hits pothole ("Standup is starting!")
+  playTeamsAudio() {
+    if (this.isMuted) return;
+    try {
+      if (!this.teamsAudio) {
+        this.teamsAudio = new Audio('/microsoft_teams_defaul.mp3');
+      }
+      this.teamsAudio.currentTime = 0;
+      this.teamsAudio.volume = 0.95;
+      const playPromise = this.teamsAudio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(e => console.warn('Teams ringtone play prevented:', e));
+      }
+    } catch (e) {
+      console.warn('Teams ringtone error:', e);
+    }
+  }
+
+  stopTeamsAudio() {
+    if (this.teamsAudio) {
+      try {
+        this.teamsAudio.pause();
+        this.teamsAudio.currentTime = 0;
+      } catch (e) {}
+    }
   }
 
   // --- Sound Effects ---
@@ -277,6 +307,108 @@ class AudioSynthesizer {
     }
   }
 
+  // Progressive Braking Sound: hydraulic disc brake friction / tire bite
+  playBrake() {
+    if (this.isMuted) return;
+    this.ensureContext();
+    if (!this.ctx) return;
+
+    const t = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    // High frequency brake pad friction squeak with low rumble
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(420, t);
+    osc.frequency.exponentialRampToValueAtTime(160, t + 0.25);
+
+    gain.gain.setValueAtTime(0.18, t);
+    gain.gain.exponentialRampToValueAtTime(0.01, t + 0.28);
+
+    osc.connect(gain);
+    gain.connect(this.sfxGain);
+
+    osc.start(t);
+    osc.stop(t + 0.28);
+  }
+
+  // Traffic Signal Chime
+  playTrafficSignalChime(isGreen = true) {
+    if (this.isMuted) return;
+    this.ensureContext();
+    if (!this.ctx) return;
+
+    const t = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'sine';
+    const startFreq = isGreen ? 587.33 : 440.0; // D5 for green, A4 for amber/red
+    const endFreq = isGreen ? 880.0 : 330.0;
+    osc.frequency.setValueAtTime(startFreq, t);
+    osc.frequency.exponentialRampToValueAtTime(endFreq, t + 0.2);
+
+    gain.gain.setValueAtTime(0.25, t);
+    gain.gain.exponentialRampToValueAtTime(0.005, t + 0.35);
+
+    osc.connect(gain);
+    gain.connect(this.sfxGain);
+
+    osc.start(t);
+    osc.stop(t + 0.35);
+  }
+
+  // Commuter Traffic Rule Compliance Bonus
+  playTrafficBonus() {
+    if (this.isMuted) return;
+    this.ensureContext();
+    if (!this.ctx) return;
+
+    const t = this.ctx.currentTime;
+    const notes = [523.25, 659.25, 783.99, 1046.50]; // C - E - G - C arpeggio!
+    notes.forEach((freq, i) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, t + i * 0.08);
+
+      gain.gain.setValueAtTime(0.22, t + i * 0.08);
+      gain.gain.exponentialRampToValueAtTime(0.005, t + i * 0.08 + 0.2);
+
+      osc.connect(gain);
+      gain.connect(this.sfxGain);
+
+      osc.start(t + i * 0.08);
+      osc.stop(t + i * 0.08 + 0.2);
+    });
+  }
+
+  // Panathur Underpass Reverberation / Filter Toggle
+  setUnderpassAcoustics(enabled) {
+    if (!this.ctx) return;
+    try {
+      if (enabled && !this.underpassFilter) {
+        this.underpassFilter = this.ctx.createBiquadFilter();
+        this.underpassFilter.type = 'lowpass';
+        this.underpassFilter.frequency.setValueAtTime(1400, this.ctx.currentTime);
+        this.underpassFilter.Q.setValueAtTime(2.5, this.ctx.currentTime); // resonance bump for tunnel echo
+
+        // Disconnect and route through filter
+        this.masterGain.disconnect();
+        this.masterGain.connect(this.underpassFilter);
+        this.underpassFilter.connect(this.ctx.destination);
+      } else if (!enabled && this.underpassFilter) {
+        this.masterGain.disconnect();
+        this.underpassFilter.disconnect();
+        this.masterGain.connect(this.ctx.destination);
+        this.underpassFilter = null;
+      }
+    } catch (e) {
+      // Graceful fallback if audio graph is in transition
+    }
+  }
+
   // Auto Shield / Scooter deploy sound
   playHoverboard() {
     if (this.isMuted) return;
@@ -441,6 +573,7 @@ class AudioSynthesizer {
 
   stopMusic() {
     this.isPlayingMusic = false;
+    this.stopTeamsAudio();
     if (this.musicTimer) {
       clearTimeout(this.musicTimer);
       this.musicTimer = null;

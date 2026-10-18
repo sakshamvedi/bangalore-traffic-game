@@ -1,4 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import {
+  IoPlay,
+  IoStorefront,
+  IoGameControllerOutline,
+  IoTrophy
+} from 'react-icons/io5';
+import { FaIndianRupeeSign } from 'react-icons/fa6';
 
 export function StartScreen({
   highScore,
@@ -6,127 +13,113 @@ export function StartScreen({
   hoverboardStock,
   onStartGame,
   onOpenShop,
-  onOpenControls
+  onOpenControls,
+  assetsProgress = 0,
+  isAssetsReady = false
 }) {
-  const [tickerIndex, setTickerIndex] = useState(0);
-
-  const tickerMessages = [
-    '🏢 EcoSpace Tech Park: Monday Morning Standup at 9:00 AM sharp!',
-    '🤖 Sarvam AI: Building Indic LLMs while waiting at Silk Board junction',
-    'ಮಾರತ್ತಹಳ್ಳಿ ➔ ಸಿಲ್ಕ್ ಬೋರ್ಡ್: ORR Traffic High alert! Dodge BMTC buses & autos!',
-    '⚡ Krutrim AI: 100 Billion Parameters, 0 Bangalore Parking Spots',
-    '☕ ಶ್ರೀ ಕೃಷ್ಣ ಟೀ ಸ್ಟಾಲ್: 100% Pure Chicory Filter Kaapi & Bun Maska',
-    '🚀 OpenAI BLR: AGI will arrive before Silk Board Flyover completes',
-    'வணக்கம் பெங்களூரு: சென்னை To சில்க் போர்டு Express!'
-  ];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTickerIndex((prev) => (prev + 1) % tickerMessages.length);
-    }, 3200);
-    return () => clearInterval(timer);
-  }, []);
-
   return (
-    <div className="menu-overlay daylight-overlay">
-      <div className="start-content-card daylight-card three-d-card">
-        {/* Namma Bengaluru 3D Extruded Header */}
-        <div className="logo-container">
-          <div className="kannada-tag">ನಮ್ಮ BENGALURU</div>
-          <div className="graffiti-subway three-d-title-top">NAMMA</div>
-          <div className="graffiti-surfers three-d-title-bottom">BENGALURU</div>
-          <div className="logo-subline daylight-subline">
-            <span>TRAFFIC SURFER // SILICON VALLEY OF INDIA</span>
+    <div className="start-screen-overlay blr-theme">
+      {/* 1. Sleek Floating Top Bar */}
+      <header className="blr-top-bar">
+        {/* Namma Bengaluru City Emblem */}
+        <div className="blr-kannada-badge">
+          <div className="kannada-flag-bar" />
+          <span className="kannada-text">NAMMA BENGALURU</span>
+        </div>
+
+        {/* Currency & Record Glass Pills */}
+        <div className="blr-top-stats">
+          <div className="blr-stat-pill coin-pill">
+            <span className="pill-icon gold"><FaIndianRupeeSign /></span>
+            <span className="pill-val">{totalCoins.toLocaleString()}</span>
           </div>
-        </div>
-
-        {/* Primary Mission Card: Monday Morning 9:00 AM */}
-        <div className="mission-briefing-card three-d-card">
-          <div className="mission-badge">🚨 PRIMARY MISSION</div>
-          <h2 className="mission-headline">"Monday Morning. 9:00 AM. Your office is waiting. Beat the Bangalore traffic!"</h2>
-          <div className="mission-details-grid">
-            <div className="mission-stat">
-              <span className="ms-label">DESTINATION</span>
-              <span className="ms-val">EcoSpace Tech Park</span>
-            </div>
-            <div className="mission-stat">
-              <span className="ms-label">DISTANCE</span>
-              <span className="ms-val">3,000 Meters</span>
-            </div>
-            <div className="mission-stat">
-              <span className="ms-label">STANDUP TIME</span>
-              <span className="ms-val punch-time">9:00 AM Sharp</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Live Ticker: Tamil & AI Startup Boards */}
-        <div className="live-ticker-bar">
-          <span className="ticker-badge">LIVE ORR</span>
-          <span className="ticker-text">{tickerMessages[tickerIndex]}</span>
-        </div>
-
-        {/* High Score & Rupees Pill */}
-        <div className="start-stats-row">
-          <div className="stat-pill daylight-pill three-d-pill">
-            <span className="pill-icon">🏆</span>
-            <span className="pill-label">HIGHEST VALUATION</span>
+          <div className="blr-stat-pill trophy-pill">
+            <span className="pill-icon amber"><IoTrophy /></span>
             <span className="pill-val">{highScore.toLocaleString()}</span>
           </div>
-          <div className="stat-pill daylight-pill three-d-pill">
-            <span className="pill-icon">₹</span>
-            <span className="pill-label">BANK BALANCE</span>
-            <span className="pill-val">₹{totalCoins.toLocaleString()}</span>
-          </div>
+        </div>
+      </header>
+
+      {/* 2. Hero Centerpiece (Pure Bangalore Local Arcade Vibe) */}
+      <main className="blr-hero-center">
+        {/* Arcade Tag */}
+        <div className="blr-arcade-tag">ORR RUNNER</div>
+
+        {/* 3D Extruded Title Header */}
+        <div className="blr-title-stack">
+          <div className="blr-title-word top">BENGALURU</div>
+          <div className="blr-title-word bottom">ORR RUSH</div>
         </div>
 
-        {/* 3D Commuter Avatar & Modern Bangalore Scooty Showcase */}
-        <div className="character-preview-box daylight-preview">
-          <div className="character-avatar-stage scooter-stage">
-            <div className="stage-platform-3d"></div>
-            <div className="three-d-character-card">
-              <div className="commuter-avatar-icon">🛵💨</div>
-              <div className="commuter-meta">
-                <span className="commuter-title">BANGALORE TECH COMMUTER (Age 25)</span>
-                <span className="commuter-specs">
-                  Office Polo • Blue Denim • Office Backpack • Fitted Helmet • Modern Indian Scooty
-                </span>
-              </div>
+        {/* Minimal Route Chip */}
+        <div className="blr-route-chip">
+          <span>PANATHUR</span>
+          <span className="chip-sep">⚡</span>
+          <span>SILK BOARD</span>
+          <span className="chip-sep">⚡</span>
+          <span>ECOSPACE</span>
+        </div>
+      </main>
+
+      {/* 3. Action Center & Abstract Loader */}
+      <footer className="blr-bottom-center">
+        {/* Abstract Minimalist Loader (NO model names, NO technical clutter) */}
+        {!isAssetsReady && (
+          <div className="blr-abstract-loader">
+            <div className="abstract-loader-bar">
+              <div
+                className="abstract-loader-fill"
+                style={{ width: `${Math.max(8, assetsProgress)}%` }}
+              />
+              <div
+                className="abstract-loader-spark"
+                style={{ left: `${Math.max(8, assetsProgress)}%` }}
+              />
             </div>
           </div>
-          <div className="character-tag daylight-char-tag">
-            <span>RIDING POSTURE: HANDS ON HANDLEBARS • FEET ON FOOTBOARD</span>
-          </div>
-        </div>
+        )}
 
-        {/* 3D Primary Hustle Button */}
+        {/* Big Bangalore Golden 3D Arcade RIDE Button */}
         <button
-          className="btn-primary-run daylight-run-btn three-d-button"
-          onClick={onStartGame}
+          className={`blr-btn-ride ${!isAssetsReady ? 'loading-locked' : 'ready-active'}`}
+          onClick={() => {
+            if (isAssetsReady) onStartGame();
+          }}
+          onTouchEnd={(e) => {
+            e.preventDefault();
+            if (isAssetsReady) onStartGame();
+          }}
+          disabled={!isAssetsReady}
           id="btn-start-run"
+          aria-label="Start Ride"
         >
-          <span className="play-triangle">🛵</span>
-          <span className="play-text">RIDE TO OFFICE (BEAT 9:00 AM)</span>
-          <span className="key-hint">SPACEBAR</span>
+          {isAssetsReady ? (
+            <>
+              <span className="ride-play-icon"><IoPlay /></span>
+              <span className="ride-text">RIDE</span>
+              <span className="ride-key-hint">SPACE</span>
+            </>
+          ) : (
+            <>
+              <span className="ride-spinner" />
+              <span className="ride-text loading">STARTING ENGINE...</span>
+            </>
+          )}
         </button>
 
-        {/* Secondary Navigation */}
-        <div className="start-menu-actions">
-          <button className="menu-secondary-btn daylight-sec-btn three-d-sub-btn" onClick={onOpenShop}>
-            <span className="btn-icon">☕</span>
-            <span>FILTER KAAPI & SHOP</span>
+        {/* Clean Secondary Action Bar */}
+        <nav className="blr-actions-bar">
+          <button className="blr-action-btn" onClick={onOpenShop} title="Garage & Boards">
+            <span className="action-icon"><IoStorefront /></span>
+            <span className="action-label">GARAGE</span>
           </button>
-          <button className="menu-secondary-btn daylight-sec-btn three-d-sub-btn" onClick={onOpenControls}>
-            <span className="btn-icon">🗺️</span>
-            <span>TRAFFIC GUIDE</span>
-          </button>
-        </div>
 
-        {/* Footer */}
-        <div className="start-footer-hint daylight-hint">
-          <span>⚠️ Dodge blue-and-white BMTC electric buses, oncoming scooters, autos & potholes!</span>
-        </div>
-      </div>
+          <button className="blr-action-btn" onClick={onOpenControls} title="Game Controls">
+            <span className="action-icon"><IoGameControllerOutline /></span>
+            <span className="action-label">CONTROLS</span>
+          </button>
+        </nav>
+      </footer>
     </div>
   );
 }

@@ -1,0 +1,11 @@
+Model Information:
+* title:	2016 Maruti Suzuki Alto K10
+* source:	https://sketchfab.com/3d-models/2016-maruti-suzuki-alto-k10-e45dbd5e86df4090abf1651e74447e1f
+* author:	BHP3D (https://sketchfab.com/BHP3D)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "2016 Maruti Suzuki Alto K10" (https://sketchfab.com/3d-models/2016-maruti-suzuki-alto-k10-e45dbd5e86df4090abf1651e74447e1f) by BHP3D (https://sketchfab.com/BHP3D) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

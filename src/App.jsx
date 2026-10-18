@@ -35,6 +35,7 @@ export default function App() {
   const [distance, setDistance] = useState(0);
   const [remainingDistance, setRemainingDistance] = useState(3000);
   const [speedKmh, setSpeedKmh] = useState(55);
+  const [routeInfo, setRouteInfo] = useState(null);
   const [victoryStats, setVictoryStats] = useState({ score: 0, coins: 0, distance: 3000, timeTaken: 95 });
 
   // Shop & Inventory
@@ -65,6 +66,25 @@ export default function App() {
   const [gameOverStats, setGameOverStats] = useState({ score: 0, coins: 0, distance: 0 });
   const [isNewRecord, setIsNewRecord] = useState(false);
 
+  // 3D Model Asset Preloading State (Maruti Alto, Auto Rickshaw, BMTC Bus, Honda Scooty, Pulsar Bike)
+  const [assetsProgress, setAssetsProgress] = useState(0);
+  const [isAssetsReady, setIsAssetsReady] = useState(false);
+  const [assetStatusText, setAssetStatusText] = useState('Initializing 3D Bangalore Fleet...');
+
+  // Powerup Activation Popup Notification (e.g. Magnet Activated!)
+  const [powerupPopup, setPowerupPopup] = useState(null);
+  const powerupPopupTimerRef = useRef(null);
+
+  const handlePowerupCollected = (popupInfo) => {
+    if (powerupPopupTimerRef.current) {
+      clearTimeout(powerupPopupTimerRef.current);
+    }
+    setPowerupPopup(popupInfo);
+    powerupPopupTimerRef.current = setTimeout(() => {
+      setPowerupPopup(null);
+    }, 2800);
+  };
+
   // Sync engine upgrades and inventory
   useEffect(() => {
     if (engineRef.current) {
@@ -75,19 +95,34 @@ export default function App() {
   }, [hoverboardStock, selectedBoard, upgradeLevels]);
 
   const handleStartGame = () => {
-    soundManager.ensureContext();
-    if (engineRef.current) {
-      engineRef.current.hoverboardStock = hoverboardStock;
-      engineRef.current.selectedBoard = selectedBoard;
-      engineRef.current.upgradeLevels = upgradeLevels;
-      engineRef.current.start();
+    if (!isAssetsReady && engineRef.current && !engineRef.current.isAssetsReady) {
+      console.log('3D Fleet still preloading...');
+      return;
     }
+
+    try {
+      soundManager.ensureContext();
+    } catch (e) {
+      console.warn('AudioContext error:', e);
+    }
+
     setGameState('playing');
     setScore(0);
     setCoins(0);
     setDistance(0);
     setRemainingDistance(3000);
     setIsNewRecord(false);
+
+    try {
+      if (engineRef.current) {
+        engineRef.current.hoverboardStock = hoverboardStock;
+        engineRef.current.selectedBoard = selectedBoard;
+        engineRef.current.upgradeLevels = upgradeLevels;
+        engineRef.current.start();
+      }
+    } catch (err) {
+      console.error('Error starting engine in handleStartGame:', err);
+    }
   };
 
   const handleRestartGame = () => {
@@ -236,16 +271,24 @@ export default function App() {
         }}
         onGameOver={handleGameOver}
         onVictory={handleVictory}
-        onDistanceUpdate={(d, rem, spd) => {
+        onDistanceUpdate={(d, rem, spd, info) => {
           setDistance(Math.floor(d));
           setRemainingDistance(Math.floor(rem));
           setSpeedKmh(spd);
+          if (info) setRouteInfo(info);
         }}
         onHoverboardCountChange={(count) => {
           setHoverboardStock(count);
           localStorage.setItem('subway_hoverboards', count.toString());
         }}
         onTogglePause={handleTogglePause}
+        onStartGame={handleStartGame}
+        onAssetsProgress={(info) => {
+          setAssetsProgress(info.percent);
+          setIsAssetsReady(info.isReady);
+          if (info.modelName) setAssetStatusText(info.modelName);
+        }}
+        onPowerupCollected={handlePowerupCollected}
         engineRef={engineRef}
       />
 
@@ -261,14 +304,18 @@ export default function App() {
           distance={distance}
           remainingDistance={remainingDistance}
           speedKmh={speedKmh}
+          routeInfo={routeInfo}
+          powerupPopup={powerupPopup}
           onActivateHoverboard={handleActivateHoverboard}
           onPause={handlePauseGame}
           isMuted={isMuted}
           onToggleMute={handleToggleMute}
-          onMoveLeft={() => engineRef.current && engineRef.current.moveLeft()}
-          onMoveRight={() => engineRef.current && engineRef.current.moveRight()}
+          onHonkHorn={() => engineRef.current && engineRef.current.honkHorn()}
+          onToggleCamera={() => engineRef.current && engineRef.current.toggleCameraView()}
+          onThrottle={(active) => engineRef.current && engineRef.current.setThrottle(active)}
+          onBrake={(active) => engineRef.current && engineRef.current.setBrake(active)}
           onJump={() => engineRef.current && engineRef.current.jump()}
-          onSlide={() => engineRef.current && engineRef.current.slide()}
+          onDismissTeamsCall={() => engineRef.current && engineRef.current.dismissTeamsCall()}
         />
       )}
 
@@ -281,6 +328,9 @@ export default function App() {
           onStartGame={handleStartGame}
           onOpenShop={() => setActiveModal('shop')}
           onOpenControls={() => setActiveModal('controls')}
+          assetsProgress={assetsProgress}
+          isAssetsReady={isAssetsReady}
+          assetStatusText={assetStatusText}
         />
       )}
 
